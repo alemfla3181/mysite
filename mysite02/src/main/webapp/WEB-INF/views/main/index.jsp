@@ -11,24 +11,13 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<li><a href="">로그인</a>
-				<li>
-				<li><a href="">회원가입</a>
-				<li>
-				<li><a href="">회원정보수정</a>
-				<li>
-				<li><a href="">로그아웃</a>
-				<li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" style="width: 200px" src="<%=request.getContextPath()%>/assets/images/KDB.jpg">
+					<img id="profile" style="width: 200px"
+						src="<%=request.getContextPath()%>/assets/images/KDB.jpg">
 					<h2>안녕하세요. 최성용의 mysite에 오신 것을 환영합니다.</h2>
 					<p>
 						이 사이트는 웹 프로그램밍 실습과제 예제 사이트입니다.<br> 메뉴는 사이트 소개, 방명록, 게시판이 있구요.
@@ -38,16 +27,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="">최성용</a></li>
-				<li><a href="">방명록</a></li>
-				<li><a href="">게시판</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2015, 2016, 2017, 2018</p>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
+		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>

@@ -1,17 +1,16 @@
 package com.douzone.mysite.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.douzone.mysite.web.mvc.main.MainActionFactory;
+import com.douzone.mysite.web.mvc.guestbook.GuestbookActionFactory;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.mvc.ActionFactory;
 
-public class MainController extends HttpServlet {
+public class GuestbookController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -19,7 +18,7 @@ public class MainController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String actionName = request.getParameter("a");
 
-		ActionFactory factory = new MainActionFactory();
+		ActionFactory factory = new GuestbookActionFactory();
 		Action action = factory.getAction(actionName);
 		action.execute(request, response);
 	}
@@ -28,4 +27,5 @@ public class MainController extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
+
 }
