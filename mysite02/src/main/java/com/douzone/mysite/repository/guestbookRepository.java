@@ -10,7 +10,6 @@ import java.util.List;
 
 import com.douzone.mysite.vo.guestbookVo;
 
-
 public class guestbookRepository {
 	public boolean insert(guestbookVo vo) {
 		boolean result = false;

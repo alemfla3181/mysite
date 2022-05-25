@@ -9,23 +9,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.douzone.mysite.repository.guestbookRepository;
 import com.douzone.mysite.vo.guestbookVo;
 import com.douzone.web.mvc.Action;
+import com.douzone.web.util.WebUtil;
 
-public class DeleteAction implements Action {
+public class AddAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String no = request.getParameter("no");
+	
+		String name = request.getParameter("name");
 		String password = request.getParameter("password");
+		String message = request.getParameter("message");
 		
 		guestbookVo vo = new guestbookVo();
-		vo.setNo(Long.parseLong(no));
+		vo.setName(name);
 		vo.setPassword(password);
-		
-		if (new guestbookRepository().delete(vo)) {
-			response.sendRedirect(request.getContextPath() + "/gb");
-		}else {			
-			response.sendRedirect(request.getContextPath() + "/gb?a=deleteform&no=" + no);
-		}
-		
+		vo.setMessage(message);
+				
+		new guestbookRepository().insert(vo);
+		WebUtil.redirect(request, response, request.getContextPath()+"/gb");
 	}
+
 }

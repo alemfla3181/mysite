@@ -1,5 +1,11 @@
+<%@page import="com.douzone.mysite.repository.guestbookRepository"%>
+<%@page import="com.douzone.mysite.vo.guestbookVo"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+<%
+List<guestbookVo> list = new guestbookRepository().findAll();
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,43 +19,52 @@ pageEncoding="UTF-8"%>
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="<%=request.getContextPath()%>/gb" method="post">
+				<form action="<%=request.getContextPath()%>/gb?a=add" method="post">
 					<input type="hidden" name="a" value="insert">
 					<table>
 						<tr>
 							<td>이름</td>
 							<td><input type="text" name="name"></td>
 							<td>비밀번호</td>
-							<td><input type="password" name="pass"></td>
+							<td><input type="password" name="password"></td>
 						</tr>
 						<tr>
-							<td colspan=4><textarea name="content" id="content"></textarea></td>
+							<td colspan=4><textarea name="message" id="content"></textarea></td>
 						</tr>
 						<tr>
 							<td colspan=4 align=right><input type="submit" VALUE=" 확인 "></td>
 						</tr>
 					</table>
 				</form>
+				
 				<ul>
 					<li>
+						<%
+						int count = list.size();
+						for (guestbookVo vo : list) {
+						%>
 						<table>
 							<tr>
-								<td>[4]</td>
-								<td>안대혁</td>
-								<td>2015-11-10 11:22:30</td>
-								<td><a href="">삭제</a></td>
+								<td><%=count%></td>
+								<td><%=vo.getName()%></td>
+								<td><%=vo.getDateTime()%></td>
+								<td><a
+									href="<%=request.getContextPath()%>/gb?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
 							</tr>
 							<tr>
-								<td colspan=4>안녕하세요. ^^;<br> 하하하하
-								</td>
+								<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>").replaceAll(" ", "&ensp;")%></td>
 							</tr>
 						</table> <br>
+						<%
+						count--;
+						}
+						%>
 					</li>
 				</ul>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
 		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
-	</div>
+	</div>	
 </body>
 </html>

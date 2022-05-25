@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	String no = request.getParameter("no");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +17,12 @@
 			<div id="guestbook" class="delete-form">
 				<form method="post" action="<%=request.getContextPath()%>/gb?a=delete">
 					<input type="hidden" name="a" value="delete">
-					<input type='hidden' name="no" value="">
+					<input type='hidden' name="no" value="<%=no%>">
 					<label>비밀번호</label>
 					<input type="password" name="password">
 					<input type="submit" value="확인">
 				</form>
-				<a href="">방명록 리스트</a>
+				<a href="<%=request.getContextPath()%>/gb">방명록 리스트</a>
 			</div>
 		</div>
 		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
