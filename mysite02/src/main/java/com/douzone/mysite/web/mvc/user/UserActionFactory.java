@@ -10,6 +10,7 @@ public class UserActionFactory extends ActionFactory {
 	public Action getAction(String actionName) {
 		Action action = null;
 
+		System.out.println(actionName);
 		if ("joinform".equals(actionName)) {
 			action = new JoinFormAction();
 		} else if ("joinsuccess".equals(actionName)) {
