@@ -26,7 +26,7 @@ public class AddAction implements Action {
 		vo.setMessage(message);
 				
 		new guestbookRepository().insert(vo);
-		WebUtil.redirect(request, response, request.getContextPath()+"/gb");
+		WebUtil.redirect(request, response, request.getContextPath()+"/guestbook");
 	}
 
 }

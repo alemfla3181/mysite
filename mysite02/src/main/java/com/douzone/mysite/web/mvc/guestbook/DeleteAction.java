@@ -22,9 +22,9 @@ public class DeleteAction implements Action {
 		vo.setPassword(password);
 		
 		if (new guestbookRepository().delete(vo)) {
-			response.sendRedirect(request.getContextPath() + "/gb");
+			response.sendRedirect(request.getContextPath() + "/guestbook");
 		}else {			
-			response.sendRedirect(request.getContextPath() + "/gb?a=deleteform&no=" + no);
+			response.sendRedirect(request.getContextPath() + "/guestbook?a=deleteform&no=" + no);
 		}
 		
 	}

@@ -19,8 +19,8 @@ List<guestbookVo> list = new guestbookRepository().findAll();
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="<%=request.getContextPath()%>/gb?a=add" method="post">
-					<input type="hidden" name="a" value="insert">
+				<form action="<%=request.getContextPath()%>/guestbook" method="post">
+					<input type="hidden" name="a" value="add">
 					<table>
 						<tr>
 							<td>이름</td>
@@ -49,7 +49,7 @@ List<guestbookVo> list = new guestbookRepository().findAll();
 								<td><%=vo.getName()%></td>
 								<td><%=vo.getDateTime()%></td>
 								<td><a
-									href="<%=request.getContextPath()%>/gb?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
+									href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>").replaceAll(" ", "&ensp;")%></td>
