@@ -3,6 +3,7 @@ package com.douzone.mysite.repository;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.douzone.mysite.vo.UserVo;
@@ -57,5 +58,52 @@ public class UserRepository {
 		}
 		
 		return connection;
-	}	
+	}
+
+	public UserVo finByEmailAndPassword(UserVo vo) {
+		UserVo result = null;
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = getConnection();			
+
+			String sql = "select no, name from user where email=? and password=?";
+			pstmt = connection.prepareStatement(sql);	
+			
+			pstmt.setString(1, vo.getEmail());
+			pstmt.setString(2, vo.getPassword());
+
+			rs = pstmt.executeQuery();			
+
+			if(rs.next()) {
+				Long no = rs.getLong(1);
+				String name = rs.getString(2);
+				
+				result = new UserVo();
+				result.setNo(no);
+				result.setName(name);				
+			}
+		} catch (SQLException e) {
+			System.out.println("드라이버 로딩 실패:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				if(connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 }
+

@@ -16,7 +16,7 @@
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
-					<img id="profile" style="width: 200px"
+					<img id="profile" style="width: 400px"
 						src="<%=request.getContextPath()%>/assets/images/KDB.jpg">
 					<h2>안녕하세요. 최성용의 mysite에 오신 것을 환영합니다.</h2>
 					<p>

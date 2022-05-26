@@ -21,7 +21,7 @@ List<guestbookVo> list = new guestbookRepository().findAll();
 			<div id="guestbook">
 				<form action="<%=request.getContextPath()%>/guestbook" method="post">
 					<input type="hidden" name="a" value="add">
-					<table>
+					<table border=1 width=500>
 						<tr>
 							<td>이름</td>
 							<td><input type="text" name="name"></td>
@@ -43,7 +43,7 @@ List<guestbookVo> list = new guestbookRepository().findAll();
 						int count = list.size();
 						for (guestbookVo vo : list) {
 						%>
-						<table>
+						<table border=1 width=500>
 							<tr>
 								<td><%=count%></td>
 								<td><%=vo.getName()%></td>
