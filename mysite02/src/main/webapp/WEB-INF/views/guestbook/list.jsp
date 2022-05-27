@@ -48,8 +48,9 @@ List<guestbookVo> list = new guestbookRepository().findAll();
 								<td><%=count%></td>
 								<td><%=vo.getName()%></td>
 								<td><%=vo.getDateTime()%></td>
-								<td><a
-									href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
+								<td>
+								<a href="<%=request.getContextPath()%>/guestbook?a=recommend&no=<%=vo.getNo()%>">👍</a> <%=vo.getCount() %> |
+								<a href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>").replaceAll(" ", "&ensp;")%></td>

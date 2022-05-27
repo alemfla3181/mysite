@@ -6,6 +6,15 @@ public class guestbookVo {
 	private String password;
 	private String message;
 	private String dateTime;
+	private Long count;
+
+	public Long getCount() {
+		return count;
+	}
+
+	public void setCount(Long count) {
+		this.count = count;
+	}
 
 	public Long getNo() {
 		return no;
@@ -50,7 +59,7 @@ public class guestbookVo {
 	@Override
 	public String toString() {
 		return "guestbookVo [no=" + no + ", name=" + name + ", password=" + password + ", message=" + message
-				+ ", dateTime=" + dateTime + "]";
-	}
+				+ ", dateTime=" + dateTime + ", count=" + count + "]";
+	}	
 
 }
