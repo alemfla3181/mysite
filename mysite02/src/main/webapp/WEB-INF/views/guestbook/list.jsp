@@ -1,25 +1,24 @@
-<%@page import="com.douzone.mysite.repository.guestbookRepository"%>
-<%@page import="com.douzone.mysite.vo.guestbookVo"%>
-<%@page import="java.util.List"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-List<guestbookVo> list = new guestbookRepository().findAll();
-%>
+	
+<% pageContext.setAttribute("newLine", "\n"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="<%=request.getContextPath()%>/assets/css/guestbook.css"
+<link href="${pageContext.request.contextPath}/assets/css/guestbook.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="<%=request.getContextPath()%>/guestbook" method="post">
+				<form action="${pageContext.request.contextPath}/guestbook" method="post">
 					<input type="hidden" name="a" value="add">
 					<table border=1 width=500>
 						<tr>
@@ -39,33 +38,31 @@ List<guestbookVo> list = new guestbookRepository().findAll();
 				
 				<ul>
 					<li>
-						<%
-						int count = list.size();
-						for (guestbookVo vo : list) {
-						%>
+					<c:set var='count' value='${fn:length(list) }' />
+					
+					<c:forEach items='${list }' var='vo' varStatus='status' >
 						<table border=1 width=500>
 							<tr>
-								<td><%=count%></td>
-								<td><%=vo.getName()%></td>
-								<td><%=vo.getDateTime()%></td>
+								<td>${count-status.index}</td>
+								<td>${vo.name }</td>
+								<td>${vo.dateTime }</td>
 								<td>
-								<a href="<%=request.getContextPath()%>/guestbook?a=recommend&no=<%=vo.getNo()%>">👍</a> <%=vo.getCount() %> |
-								<a href="<%=request.getContextPath()%>/guestbook?a=deleteform&no=<%=vo.getNo()%>">삭제</a></td>
+								<a href="${pageContext.request.contextPath}/guestbook?a=recommend&no=${vo.no}">👍</a> ${vo.count } |
+								<a href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
 							</tr>
 							<tr>
-								<td colspan=4><%=vo.getMessage().replaceAll("\n", "<br/>").replaceAll(" ", "&ensp;")%></td>
+								<td colspan=4>
+								${ fn: replace(vo.message, newLine, "<br />")}
+								</td>
 							</tr>
 						</table> <br>
-						<%
-						count--;
-						}
-						%>
+					</c:forEach>						
 					</li>
 				</ul>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>	
 </body>
 </html>
