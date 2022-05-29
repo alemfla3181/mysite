@@ -16,13 +16,13 @@ public class RecommendAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String no = request.getParameter("no");
+		String ud = request.getParameter("ud");
 		
 		Long count = new guestbookRepository().findCount(Long.parseLong(no));
 		guestbookVo vo = new guestbookVo();
 		vo.setNo(Long.parseLong(no));
 		vo.setCount(count);
-		
-		new guestbookRepository().recommend(vo);
+		new guestbookRepository().recommend(vo, ud);
 		WebUtil.redirect(request, response, request.getContextPath()+"/guestbook");
 	}
 

@@ -36,6 +36,8 @@
 					</table>
 				</form>
 				
+				<a href="${pageContext.request.contextPath}/guestbook?sort=1">좋아요 순 정렬</a>
+								
 				<ul>
 					<li>
 					<c:set var='count' value='${fn:length(list) }' />
@@ -47,7 +49,9 @@
 								<td>${vo.name }</td>
 								<td>${vo.dateTime }</td>
 								<td>
-								<a href="${pageContext.request.contextPath}/guestbook?a=recommend&no=${vo.no}">👍</a> ${vo.count } |
+								<a href="${pageContext.request.contextPath}/guestbook?a=recommend&no=${vo.no}&ud=up">👍</a>&nbsp
+								<a href="${pageContext.request.contextPath}/guestbook?a=recommend&no=${vo.no}&ud=down">👎</a>
+								 ${vo.count } |
 								<a href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
 							</tr>
 							<tr>

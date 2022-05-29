@@ -46,7 +46,7 @@ public class guestbookRepository {
 		return result;
 	}
 
-	public List<guestbookVo> findAll() {
+	public List<guestbookVo> findAll(String sort) {
 		List<guestbookVo> result = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -54,8 +54,11 @@ public class guestbookRepository {
 
 		try {
 			connection = getConnection();
-
-			String sql = "select * from guestbook order by no desc";
+			String sql = null;
+			if(sort.equals("1"))
+				sql = "select * from guestbook order by count desc";
+			else
+				sql = "select * from guestbook order by no desc";
 			pstmt = connection.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -173,16 +176,19 @@ public class guestbookRepository {
 		return result;
 	}
 
-	public void recommend(guestbookVo vo) {
+	public void recommend(guestbookVo vo, String updown) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			connection = getConnection();
-
+			
 			String sql = "update guestbook set count=? where no =?";
 			pstmt = connection.prepareStatement(sql);
-			pstmt.setLong(1, vo.getCount() + 1);
+			if(updown.equals("up"))
+				pstmt.setLong(1, vo.getCount() + 1);
+			else
+				pstmt.setLong(1, vo.getCount() - 1);
 			pstmt.setLong(2, vo.getNo());
 
 			pstmt.executeUpdate();

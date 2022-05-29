@@ -17,9 +17,12 @@ public class IndexAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<guestbookVo> list = new guestbookRepository().findAll();
+		String sort = request.getParameter("sort");
+		if(sort==null) sort = "2";
+		List<guestbookVo> list = new guestbookRepository().findAll(sort);
 		request.setAttribute("list", list);
 		WebUtil.forward(request, response, "guestbook/list");
+		
 	}
 
 }
