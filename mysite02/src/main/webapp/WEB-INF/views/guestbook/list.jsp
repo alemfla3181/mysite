@@ -35,7 +35,8 @@
 						</tr>
 					</table>
 				</form>
-				
+				<br/>
+				<hr/>
 				<a href="${pageContext.request.contextPath}/guestbook?sort=1">좋아요 순 정렬</a>
 				<a href="${pageContext.request.contextPath}/guestbook?sort=2">최신순 정렬</a>
 								
