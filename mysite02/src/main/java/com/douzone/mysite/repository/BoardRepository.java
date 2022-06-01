@@ -199,7 +199,7 @@ public class BoardRepository {
 		return result;
 	}
 	
-	public Long findPage() {
+	public Long findPage(String query) {
 		Long result = null;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -207,9 +207,21 @@ public class BoardRepository {
 
 		try {
 			connection = getConnection();
-
-			String sql = " select count(*) from board";
-			pstmt = connection.prepareStatement(sql);
+			String sql = null;
+			if(query.equals("")) {
+				sql = "select count(*) from board";
+				pstmt = connection.prepareStatement(sql);
+			}else {
+				sql = "select count(*)"
+						+ " from user a, board b"
+						+ " where a.no = b.user_no"
+						+ " and (a.name like concat('%',?,'%')"
+						+ " or b.title like concat('%',?,'%'))"
+						+ " order by g_no desc, o_no asc";
+				pstmt = connection.prepareStatement(sql);				
+				pstmt.setString(1, query);
+				pstmt.setString(2, query);
+			}	
 
 			rs = pstmt.executeQuery();
 
