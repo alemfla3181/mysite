@@ -58,30 +58,30 @@
 					<ul><c:if test="${page.page != 1}">
 							<c:choose>
 								<c:when test="${param.kwd!=null}">
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?i=${page.page-1}&kwd=${param.kwd}">◀</a></li>
+									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page-1}&kwd=${param.kwd}">◀</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?i=${page.page-1}">◀</a></li>
+									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page-1}">◀</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:if>												
-						<c:forEach var='i' begin="${page.startPage }" end="${page.totalSize}">
+						<c:forEach var='pg' begin="${page.startPage }" end="${page.totalSize}">
 						<c:choose>
-							<c:when test="${i == page.page}">
-								<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?i=${page.page}">${i}</a></li>
+							<c:when test="${pg == page.page}">
+								<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?pg=${page.page}">${pg}</a></li>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${page.lastPage < i}">
-										<li >${i}</li>
+									<c:when test="${page.lastPage < pg}">
+										<li >${pg}</li>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
 											<c:when test="${param.kwd!=null}">
-												<li ><a href="${pageContext.servletContext.contextPath }/board?i=${i}&kwd=${param.kwd}">${i}</a></li>
+												<li ><a href="${pageContext.servletContext.contextPath }/board?pg=${pg}&kwd=${param.kwd}">${pg}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li ><a href="${pageContext.servletContext.contextPath }/board?i=${i}">${i}</a></li>
+												<li ><a href="${pageContext.servletContext.contextPath }/board?pg=${pg}">${pg}</a></li>
 											</c:otherwise>
 										</c:choose>										
 									</c:otherwise>
@@ -92,10 +92,10 @@
 						<c:if test="${page.page != page.lastPage}">
 							<c:choose>
 								<c:when test="${param.kwd!=null}">
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?i=${page.page+1}&kwd=${param.kwd}">▶</a></li>
+									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page+1}&kwd=${param.kwd}">▶</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?i=${page.page+1}">▶</a></li>
+									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page+1}">▶</a></li>
 								</c:otherwise>
 							</c:choose>							
 						</c:if>

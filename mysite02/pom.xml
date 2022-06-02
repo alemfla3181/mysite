@@ -24,7 +24,7 @@
 			<version>2.7.5</version>
 		</dependency>
 		
-			<!-- JSTL -->
+		<!-- JSTL -->
 		<dependency>
 		    <groupId>jstl</groupId>
 		    <artifactId>jstl</artifactId>

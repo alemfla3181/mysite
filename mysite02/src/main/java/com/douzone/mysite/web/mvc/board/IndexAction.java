@@ -20,16 +20,16 @@ public class IndexAction implements Action {
 		PageVo page = new PageVo();		
 		
 		Long pages = null;
-		String i = request.getParameter("i");
+		String pg = request.getParameter("pg");
 		String query = request.getParameter("kwd");
 		if(query == null)
 			query = "";
 		page.setCount(new BoardRepository().findPage(query));
 		
-		if(i == null || (Integer.parseInt(i)) < 0)
+		if(pg == null || (long)Double.parseDouble(request.getParameter("pg")) < 0)
 			pages = 1L;
 		else
-			pages = Long.parseLong(request.getParameter("i"));
+			pages = (long)Double.parseDouble(request.getParameter("pg"));
 		
 		page.setPage(pages);
 		page.setLastPage((page.getCount()-1)/5+1);
