@@ -33,22 +33,23 @@ public class ViewAction implements Action {
 					viewPage = cookie.getValue();
 				}
 			}
-		}
-
-		// 쿠키 쓰기
-		if (viewPage.indexOf("[" + no + "]") < 0) {
-			vo.setHit(vo.getHit() + 1);
-			new BoardRepository().updateHit(vo);
-			viewCookie = new Cookie(COOKIE_NAME, viewPage += "[" + no + "]");
-			response.addCookie(viewCookie);
-		}else if(viewCookie == null){
+		}		
+		
+		// 쿠키 쓰기		
+		if(viewCookie == null){
 			vo.setHit(vo.getHit() + 1);
 			new BoardRepository().updateHit(vo);
 			Cookie cookie = new Cookie(COOKIE_NAME, "[" + no + "]");
 			cookie.setPath(request.getContextPath());
-			cookie.setMaxAge(24 * 60 * 60); // 1day
+			cookie.setMaxAge(60 * 60 * 24); // 1day
 			response.addCookie(cookie);
 		}
+		else if (viewPage.indexOf("[" + no + "]") < 0) {
+			vo.setHit(vo.getHit() + 1);
+			new BoardRepository().updateHit(vo);
+			viewCookie.setValue(viewPage += "[" + no + "]");
+			response.addCookie(viewCookie);
+		}else 
 
 		request.setAttribute("vo", vo);
 		WebUtil.forward(request, response, "board/view");
