@@ -40,7 +40,7 @@
 								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
 							</c:if>					 
 							<a href="${pageContext.servletContext.contextPath }/board?a=view&no=${vo.no}">${vo.title }			
-							</a></td>
+							</a></td>	
 							<td>${vo.user_name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.reg_date }</td>

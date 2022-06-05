@@ -24,6 +24,7 @@ public class ViewAction implements Action {
 
 		Cookie viewCookie = null;
 		String viewPage = "";
+		int viewTime = 0;
 		// 쿠키 읽기
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 0) {
@@ -31,9 +32,10 @@ public class ViewAction implements Action {
 				if (COOKIE_NAME.equals(cookie.getName())) {
 					viewCookie = cookie;
 					viewPage = cookie.getValue();
+					viewTime = cookie.getMaxAge();
 				}
 			}
-		}		
+		}	
 		
 		// 쿠키 쓰기		
 		if(viewCookie == null){
@@ -41,18 +43,23 @@ public class ViewAction implements Action {
 			new BoardRepository().updateHit(vo);
 			Cookie cookie = new Cookie(COOKIE_NAME, "[" + no + "]");
 			cookie.setPath(request.getContextPath());
-			cookie.setMaxAge(60 * 60 * 24); // 1day
+			cookie.setMaxAge(100); // 1day
 			response.addCookie(cookie);
 		}
 		else if (viewPage.indexOf("[" + no + "]") < 0) {
 			vo.setHit(vo.getHit() + 1);
 			new BoardRepository().updateHit(vo);
 			viewCookie.setValue(viewPage += "[" + no + "]");
+			viewCookie.setMaxAge(viewTime);
+
 			response.addCookie(viewCookie);
-		}else 
+		} 
 
 		request.setAttribute("vo", vo);
 		WebUtil.forward(request, response, "board/view");
+		
+		
 	}
+
 
 }
