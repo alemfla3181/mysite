@@ -43,7 +43,7 @@ public class ViewAction implements Action {
 			new BoardRepository().updateHit(vo);
 			Cookie cookie = new Cookie(COOKIE_NAME, "[" + no + "]");
 			cookie.setPath(request.getContextPath());
-			cookie.setMaxAge(100); // 1day
+			cookie.setMaxAge(60*60*24); // 1day
 			response.addCookie(cookie);
 		}
 		else if (viewPage.indexOf("[" + no + "]") < 0) {
