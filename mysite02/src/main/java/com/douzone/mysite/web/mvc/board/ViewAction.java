@@ -35,31 +35,27 @@ public class ViewAction implements Action {
 					viewTime = cookie.getMaxAge();
 				}
 			}
-		}	
-		
-		// 쿠키 쓰기		
-		if(viewCookie == null){
+		}
+
+		// 쿠키 쓰기
+		if (viewCookie == null) {
 			vo.setHit(vo.getHit() + 1);
 			new BoardRepository().updateHit(vo);
 			Cookie cookie = new Cookie(COOKIE_NAME, "[" + no + "]");
 			cookie.setPath(request.getContextPath());
-			cookie.setMaxAge(60*60*24); // 1day
+			cookie.setMaxAge(60 * 60 * 24); // 1day
 			response.addCookie(cookie);
-		}
-		else if (viewPage.indexOf("[" + no + "]") < 0) {
+		} else if (viewPage.indexOf("[" + no + "]") < 0) {
 			vo.setHit(vo.getHit() + 1);
 			new BoardRepository().updateHit(vo);
 			viewCookie.setValue(viewPage += "[" + no + "]");
 			viewCookie.setMaxAge(viewTime);
-
 			response.addCookie(viewCookie);
-		} 
+		}
 
 		request.setAttribute("vo", vo);
 		WebUtil.forward(request, response, "board/view");
-		
-		
-	}
 
+	}
 
 }

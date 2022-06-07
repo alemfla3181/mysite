@@ -1,0 +1,1 @@
+package com.douzone.mysite.vo;
