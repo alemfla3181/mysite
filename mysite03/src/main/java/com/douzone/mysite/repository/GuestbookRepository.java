@@ -1,29 +1,34 @@
 package com.douzone.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.douzone.mysite.exception.GuestbookRepositoryException;
 import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
-public class GuestbookRepository {
+public class GuestbookRepository {	
+	@Autowired
+	private DataSource dataSource;
+	
 	public boolean insert(GuestbookVo vo) {
 		boolean result = false;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 
 		try {
-			connection = getConnection();
+			connection = dataSource.getConnection();
 
-			String sql = "inser into guestbook(no,name,password,message) values(null, ?, ?, ?)";
+			String sql = "insert into guestbook(no,name,password,message) values(null, ?, ?, ?)";
 			pstmt = connection.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
@@ -58,7 +63,7 @@ public class GuestbookRepository {
 		ResultSet rs = null;
 
 		try {
-			connection = getConnection();
+			connection = dataSource.getConnection();
 			String sql = null;
 			if(sort.equals("1"))
 				sql = "select * from guestbook order by count desc";
@@ -121,7 +126,7 @@ public class GuestbookRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			connection = getConnection();
+			connection = dataSource.getConnection();
 
 			String sql = "delete from guestbook where no = ? and password = ?";
 			pstmt = connection.prepareStatement(sql);
@@ -156,7 +161,7 @@ public class GuestbookRepository {
 		Long result = null;
 		ResultSet rs = null;
 		try {
-			connection = getConnection();
+			connection = dataSource.getConnection();
 
 			String sql = "select count from guestbook where no=?";
 			pstmt = connection.prepareStatement(sql);
@@ -195,7 +200,7 @@ public class GuestbookRepository {
 		PreparedStatement pstmt = null;
 
 		try {
-			connection = getConnection();
+			connection = dataSource.getConnection();
 			
 			String sql = "update guestbook set count=? where no =?";
 			pstmt = connection.prepareStatement(sql);
@@ -221,19 +226,4 @@ public class GuestbookRepository {
 			}
 		}
 	}
-
-	private Connection getConnection() throws SQLException {
-		Connection connection = null;
-
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mysql://192.168.10.51:3306/webdb";
-			connection = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
-		}
-
-		return connection;
-	}
-
 }
