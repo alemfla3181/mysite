@@ -45,4 +45,5 @@ public class GuestbookController {
 		guestbookService.addMessage(vo);
 		return "redirect:/guestbook";
 	}
+	
 }

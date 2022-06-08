@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.douzone.mysite.exception.GuestbookRepositoryException;
 import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
@@ -22,7 +23,7 @@ public class GuestbookRepository {
 		try {
 			connection = getConnection();
 
-			String sql = "insert into guestbook(no,name,password,message) values(null, ?, ?, ?)";
+			String sql = "inser into guestbook(no,name,password,message) values(null, ?, ?, ?)";
 			pstmt = connection.prepareStatement(sql);
 
 			pstmt.setString(1, vo.getName());
@@ -32,7 +33,8 @@ public class GuestbookRepository {
 			int count = pstmt.executeUpdate();
 			result = count == 1;
 		} catch (SQLException e) {
-			System.out.println("드라이버 로딩 실패:" + e);
+//			System.out.println("드라이버 로딩 실패:" + e);
+			throw new GuestbookRepositoryException(e.toString());
 		} finally {
 			try {
 				if (pstmt != null) {
