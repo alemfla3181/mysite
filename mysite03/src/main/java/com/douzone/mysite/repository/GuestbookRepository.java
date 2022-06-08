@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.douzone.mysite.vo.guestbookVo;
+import com.douzone.mysite.vo.GuestbookVo;
 
 @Repository
-public class guestbookRepository {
-	public boolean insert(guestbookVo vo) {
+public class GuestbookRepository {
+	public boolean insert(GuestbookVo vo) {
 		boolean result = false;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -49,8 +49,8 @@ public class guestbookRepository {
 		return result;
 	}
 
-	public List<guestbookVo> findAll(String sort) {
-		List<guestbookVo> result = new ArrayList<>();
+	public List<GuestbookVo> findAll(String sort) {
+		List<GuestbookVo> result = new ArrayList<>();
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -73,7 +73,7 @@ public class guestbookRepository {
 				String dateTime = rs.getString(5);
 				Long count = rs.getLong(6);
 
-				guestbookVo vo = new guestbookVo();
+				GuestbookVo vo = new GuestbookVo();
 				vo.setNo(no);
 				vo.setName(name);
 				vo.setPassword(password);
@@ -103,8 +103,17 @@ public class guestbookRepository {
 
 		return result;
 	}
+	
+	public boolean delete(Long no, String password) {
+		
+		GuestbookVo vo = new GuestbookVo();
+		vo.setNo(no);
+		vo.setPassword(password);
+		return delete(vo);
+	}
+	
 
-	public boolean delete(guestbookVo vo) {
+	public boolean delete(GuestbookVo vo) {
 		boolean result = false;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -179,7 +188,7 @@ public class guestbookRepository {
 		return result;
 	}
 
-	public void recommend(guestbookVo vo, String updown) {
+	public void recommend(GuestbookVo vo, String updown) {
 		Connection connection = null;
 		PreparedStatement pstmt = null;
 

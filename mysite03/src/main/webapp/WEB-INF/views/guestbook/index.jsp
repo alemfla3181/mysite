@@ -2,9 +2,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	
+	pageEncoding="UTF-8"%>	
 <% pageContext.setAttribute("newLine", "\n"); %>
+<% pageContext.setAttribute("newSpace", " "); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +18,7 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="${pageContext.request.contextPath}/guestbook" method="post">
-					<input type="hidden" name="a" value="add">
+				<form action="${pageContext.request.contextPath}/guestbook/add" method="post">
 					<table border=1 width=500>
 						<tr>
 							<td>이름</td>
@@ -37,8 +36,6 @@
 				</form>
 				<br/>
 				<hr/>
-				<a href="${pageContext.request.contextPath}/guestbook?sort=1">좋아요 순 정렬</a>
-				<a href="${pageContext.request.contextPath}/guestbook?sort=2">최신순 정렬</a>
 								
 				<ul>
 					<li>
@@ -50,15 +47,12 @@
 								<td>${count-status.index}</td>
 								<td>${vo.name }</td>
 								<td>${vo.dateTime }</td>
-								<td>
-								<a href="${pageContext.request.contextPath}/guestbook?a=recommend&no=${vo.no}&ud=up">👍</a>&nbsp
-								<a href="${pageContext.request.contextPath}/guestbook?a=recommend&no=${vo.no}&ud=down">👎</a>
-								 ${vo.count } |
-								<a href="${pageContext.request.contextPath}/guestbook?a=deleteform&no=${vo.no}">삭제</a></td>
+								<td>							
+								<a href="${pageContext.request.contextPath}/guestbook/delete/${vo.no}">삭제</a></td>
 							</tr>
 							<tr>
 								<td colspan=4>
-								${ fn: replace(vo.message, newLine, "<br />")}
+								${fn:replace(fn:replace(vo.message, newSpace, '&nbsp;'), newLine, '<br />')}
 								</td>
 							</tr>
 						</table> <br>

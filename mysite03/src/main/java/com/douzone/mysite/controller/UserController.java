@@ -86,7 +86,9 @@ public class UserController {
 		}
 		// ----------------------------------------------
 		
-		System.out.println(vo);
+		vo.setNo(authUser.getNo());
+		userService.updateUser(vo);
+		authUser.setName(vo.getName());
 		
 		return "redirect:/user/update";
 	}
