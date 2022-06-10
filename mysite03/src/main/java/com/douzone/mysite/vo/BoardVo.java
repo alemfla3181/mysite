@@ -3,7 +3,7 @@ package com.douzone.mysite.vo;
 public class BoardVo {
 	private Long no;
 	private String title;
-	private String contents;
+	private String content;
 	private Long hit;
 	private String reg_date;
 	private Long g_no;
@@ -28,12 +28,12 @@ public class BoardVo {
 		this.title = title;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Long getHit() {
@@ -94,7 +94,7 @@ public class BoardVo {
 
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", reg_date="
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + content + ", hit=" + hit + ", reg_date="
 				+ reg_date + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", user_no=" + user_no + "]";
 	}
 

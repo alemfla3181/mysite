@@ -31,7 +31,7 @@ pageContext.setAttribute("newLine", "\n");
 					<tr>
 						<td class="label">내용</td>
 						<td>
-							<div class="view-content">${ fn: replace(vo.contents, newLine, "<br />")}
+							<div class="view-content">${ fn: replace(vo.content, newLine, "<br />")}
 							</div>
 						</td>
 					</tr>
@@ -40,14 +40,14 @@ pageContext.setAttribute("newLine", "\n");
 					<a href="${pageContext.servletContext.contextPath }/board">글목록</a>
 					<c:choose>
 						<c:when test="${authUser.no==vo.user_no }">
-							<a href="${pageContext.servletContext.contextPath }/board?a=modifyform&no=${vo.no}">글수정</a>
+							<a href="${pageContext.servletContext.contextPath }/board/modify/${vo.no}">글수정</a>
 						</c:when>
 					</c:choose>
 					<c:choose>
 						<c:when test="${empty authUser }">
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/board?a=writeform&no=${vo.no}">답글달기</a>
+							<a href="${pageContext.request.contextPath}/board/write/${vo.no}">답글달기</a>
 						</c:otherwise>
 					</c:choose>					
 				</div>

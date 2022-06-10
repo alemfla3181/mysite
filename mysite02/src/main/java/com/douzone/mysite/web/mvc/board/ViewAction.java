@@ -24,7 +24,6 @@ public class ViewAction implements Action {
 
 		Cookie viewCookie = null;
 		String viewPage = "";
-		int viewTime = 0;
 		// 쿠키 읽기
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null && cookies.length > 0) {
@@ -32,7 +31,6 @@ public class ViewAction implements Action {
 				if (COOKIE_NAME.equals(cookie.getName())) {
 					viewCookie = cookie;
 					viewPage = cookie.getValue();
-					viewTime = cookie.getMaxAge();
 				}
 			}
 		}
@@ -49,7 +47,7 @@ public class ViewAction implements Action {
 			vo.setHit(vo.getHit() + 1);
 			new BoardRepository().updateHit(vo);
 			viewCookie.setValue(viewPage += "[" + no + "]");
-			viewCookie.setMaxAge(viewTime);
+			viewCookie.setMaxAge(60 * 60 * 24);
 			response.addCookie(viewCookie);
 		}
 
