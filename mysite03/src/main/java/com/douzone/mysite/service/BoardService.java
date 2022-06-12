@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.PageVo;
 import com.douzone.mysite.vo.UserVo;
 
 @Service
@@ -21,31 +20,35 @@ public class BoardService {
 	@Autowired
 	HttpSession session;
 
-	public List<BoardVo> getList(PageVo page, String query) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		Long pg = (page.getPage() - 1) * 5;
-		params.put("pg", pg);
-		params.put("query", query);
-		return boardRepository.findAll(params);
-	}
+	public Map<String, Object> getList(Integer prevPage, String query) {
+		int count = boardRepository.findBoardCount(query);
+		int TotalPage = (int) ((count - 1) / 5 + 1);
+		int beginPage, endPage;
 
-	public PageVo getPage(String pg, String query) {
-		PageVo page = new PageVo();
-		page.setCount(boardRepository.findPage(query));
-		page.setPage(Long.parseLong(pg));
-		page.setLastPage((page.getCount() - 1) / 5 + 1);
-
-		if (page.getPage() < 4 || page.getLastPage() <= 5) {
-			page.setStartPage(1L);
-			page.setTotalSize(5L);
-		} else if ((page.getLastPage() - page.getPage()) > 1) {
-			page.setStartPage(page.getPage() - 2);
-			page.setTotalSize(page.getPage() + 2);
+		if (prevPage < 4 || TotalPage <= 5) {
+			beginPage = 1;
+			endPage = 5;
+		} else if (TotalPage - prevPage > 1) {
+			beginPage = prevPage - 2;
+			endPage = prevPage + 2;
 		} else {
-			page.setStartPage(page.getLastPage() - 4);
-			page.setTotalSize(page.getLastPage());
+			beginPage = prevPage - 4;
+			endPage = TotalPage;
 		}
-		return page;
+		List<BoardVo> list = boardRepository.findAll(prevPage, query);
+
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("count", count);			// 총 글의 수
+		map.put("TotalPage", TotalPage);	// 총 페이지 수
+		map.put("beginPage", beginPage);	// 페이징에 보일 첫 페이지
+		map.put("prevPage", prevPage);		// 페이징에 보일 현재 페이지
+		map.put("endPage", endPage);		// 페이징에 보일 마지막 페이지
+		map.put("count", count);
+		map.put("count", count);
+		map.put("query", query);
+
+		return map;
 	}
 
 	public boolean insert(BoardVo vo) {
@@ -73,7 +76,7 @@ public class BoardService {
 
 	public void viewHit(HttpServletResponse response, String view, BoardVo vo) {
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if((authUser == null) || (authUser.getNo() != vo.getUser_no())) {
+		if ((authUser == null) || (authUser.getNo() != vo.getUser_no())) {
 			if (view == "") {
 				boardRepository.updateHit(vo.getNo());
 				Cookie cookie = new Cookie("view", "[" + vo.getNo() + "]");
@@ -85,7 +88,7 @@ public class BoardService {
 				cookie.setMaxAge(60 * 60 * 24); // 1day
 				response.addCookie(cookie);
 			}
-		}		
+		}
 	}
 
 	public void delete(Long no) {

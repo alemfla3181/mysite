@@ -1,5 +1,6 @@
 package com.douzone.mysite.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,12 +16,15 @@ public class BoardRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<BoardVo> findAll(Map<String, Object> params) {
-		return sqlSession.selectList("board.findAll", params);
+	public List<BoardVo> findAll(Integer page, String query) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("query", query);
+		map.put("page", (page-1) * 5);		
+		return sqlSession.selectList("board.findAll", map);
 	}
 
-	public Long findPage(String query) {
-		return sqlSession.selectOne("board.findPage", query);
+	public int findBoardCount(String query) {
+		return sqlSession.selectOne("board.findBoardCount", query);
 	}
 	
 	public boolean insert(BoardVo vo) {

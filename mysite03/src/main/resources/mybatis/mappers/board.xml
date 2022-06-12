@@ -7,7 +7,7 @@
 		<when test='query ==""'>
 			<![CDATA[
 			select b.no, a.name as user_name, b.title, b.contents,b.hit,b.reg_date, b.g_no, b.o_no, b.depth, b.user_no
-			from user a, board b where a.no = b.user_no order by g_no desc, o_no asc limit #{pg}, 5
+			from user a, board b where a.no = b.user_no order by g_no desc, o_no asc limit #{page}, 5
 			]]>
 		</when>
 		<otherwise>
@@ -17,17 +17,17 @@
 				where a.no = b.user_no
 				and (a.name like concat('%${query}%')
 				or b.title like concat('%${query}%'))
-				order by g_no desc, o_no asc limit #{pg}, 5
+				order by g_no desc, o_no asc limit #{page}, 5
 				]]>
 		</otherwise>
 	</choose>
 	
 	</select>
 
-	<select id="findPage"  parameterType="String" resultType="long">
+	<select id="findBoardCount"  parameterType="String" resultType="Integer">
 		<choose>
 			<when test='query == ""'>
-			<![CDATA[
+			<![CDATA[	
 				select count(*) from board
 				]]>
 			</when>

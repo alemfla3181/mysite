@@ -1,6 +1,6 @@
 package com.douzone.mysite.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.PageVo;
 
 @Controller
 @RequestMapping("/board")
@@ -24,12 +23,11 @@ public class BoardController {
 	private BoardService boardService;
 
 	@RequestMapping("")
-	public String index(@RequestParam(value = "pg", required = true, defaultValue = "1") String pg,
+	public String index(@RequestParam(value = "pg", required = true, defaultValue = "1") Integer page,
 			@RequestParam(value = "kwd", required = true, defaultValue = "") String kwd, Model model) {
-		PageVo page = boardService.getPage(pg, kwd);
-		List<BoardVo> list = boardService.getList(page, kwd);
-		model.addAttribute("page", page);
-		model.addAttribute("list", list);
+//		PageVo page = boardService.getPage(pg, kwd);
+		Map<String, Object> map = boardService.getList(page, kwd);
+		model.addAttribute("map", map);
 		return "board/index";
 	}
 

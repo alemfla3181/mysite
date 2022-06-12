@@ -9,7 +9,7 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link
-	href="${pageContext.servletContext.contextPath }/assets/css/board.css"
+	href="${pageContext.request.contextPath }/assets/css/board.css"
 	rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -31,22 +31,36 @@
 						<th>&nbsp;</th>
 					</tr>
 
-					<c:set var='count' value='${fn:length(list) }' />
-					<c:forEach items='${list }' var='vo' varStatus='status'>
+					<c:forEach items='${map.list }' var='vo' varStatus='status'>
 						<tr>
-							<td>${page.count-(5)*(page.page-1)-status.index}</td>
+							<td>${map.count-(5)*(map.prevPage-1)-status.index}</td>
 							<td style="text-align: left; padding-left: ${(vo.depth-1)*10}px">				
 							<c:if test="${vo.depth > 1 }">
-								<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png" />
+								<img src="${pageContext.request.contextPath }/assets/images/reply.png" />
 							</c:if>					 
-							<a href="${pageContext.servletContext.contextPath }/board/view/${vo.no}">${vo.title }			
-							</a></td>	
+							<c:choose>
+								<c:when test='${map.query != ""}'>
+									<a href="${pageContext.request.contextPath }/board/view/${vo.no}?pg=${map.prevPage}&kwd=${map.query}">${vo.title }</a>	
+								</c:when>
+								<c:otherwise>
+									<a href="${pageContext.request.contextPath }/board/view/${vo.no}?pg=${map.prevPage}">${vo.title }</a>	
+								</c:otherwise>
+							</c:choose>		
+							</td>	
 							<td>${vo.user_name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.reg_date }</td>
 							<td>
 							<c:if test="${authUser.no == vo.user_no }">
-								<a href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}" class="del">삭제</a>
+								<c:choose>
+									<c:when test='${map.query != ""}'>
+										<a href="${pageContext.request.contextPath }/board/delete/${vo.no}?pg=${map.prevPage}&kwd=${map.query}" class="del">삭제</a>	
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath }/board/delete/${vo.no}?pg=${map.prevPage}" class="del">삭제</a>
+									</c:otherwise>
+								</c:choose>	
+								
 							</c:if>						
 							</td>
 						</tr>
@@ -55,33 +69,33 @@
 				
 				<!-- pager 추가 -->
 				<div class="pager">
-					<ul><c:if test="${page.page != 1}">
+					<ul><c:if test="${map.prevPage > 1}">
 							<c:choose>
-								<c:when test="${param.kwd!=null}">
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page-1}&kwd=${param.kwd}">◀</a></li>
+								<c:when test='${map.query != ""}'>
+									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage-1}&kwd=${map.query}">◀</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page-1}">◀</a></li>
+									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage-1}">◀</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:if>												
-						<c:forEach var='pg' begin="${page.startPage }" end="${page.totalSize}">
+						<c:forEach var='page' begin="${map.beginPage }" end="${map.endPage}">
 						<c:choose>
-							<c:when test="${pg == page.page}">
-								<li class="selected"><a href="${pageContext.servletContext.contextPath }/board?pg=${page.page}">${pg}</a></li>
+							<c:when test="${page == map.prevPage}">
+								<li class="selected"><a href="${pageContext.request.contextPath }/board?pg=${map.prevPage}">${page}</a></li>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
-									<c:when test="${page.lastPage < pg}">
-										<li >${pg}</li>
+									<c:when test="${map.TotalPage < page}">
+										<li >${page}</li>
 									</c:when>
 									<c:otherwise>
 										<c:choose>
-											<c:when test="${param.kwd!=null}">
-												<li ><a href="${pageContext.servletContext.contextPath }/board?pg=${pg}&kwd=${param.kwd}">${pg}</a></li>
+											<c:when test='${map.query != ""}'>
+												<li ><a href="${pageContext.request.contextPath }/board?pg=${page}&kwd=${map.query}">${page}</a></li>
 											</c:when>
 											<c:otherwise>
-												<li ><a href="${pageContext.servletContext.contextPath }/board?pg=${pg}">${pg}</a></li>
+												<li ><a href="${pageContext.request.contextPath }/board?pg=${page}">${page}</a></li>
 											</c:otherwise>
 										</c:choose>										
 									</c:otherwise>
@@ -89,13 +103,13 @@
 							</c:otherwise>
 						</c:choose>
 						</c:forEach>
-						<c:if test="${page.page != page.lastPage}">
+						<c:if test="${map.prevPage < map.TotalPage}">
 							<c:choose>
-								<c:when test="${param.kwd!=null}">
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page+1}&kwd=${param.kwd}">▶</a></li>
+								<c:when test='${map.query != ""}'>
+									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage+1}&kwd=${map.query}">▶</a></li>
 								</c:when>
 								<c:otherwise>
-									<li><a style="color:orange" href="${pageContext.servletContext.contextPath }/board?pg=${page.page+1}">▶</a></li>
+									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage+1}">▶</a></li>
 								</c:otherwise>
 							</c:choose>							
 						</c:if>

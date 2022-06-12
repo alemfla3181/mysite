@@ -37,9 +37,16 @@ pageContext.setAttribute("newLine", "\n");
 					</tr>
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.servletContext.contextPath }/board">글목록</a>
 					<c:choose>
-						<c:when test="${authUser.no==vo.user_no }">
+						<c:when test='${param.kwd != null }'>
+							<a href="${pageContext.servletContext.contextPath }/board?pg=${param.pg}&kwd=${param.kwd}">글목록</a>
+						</c:when>
+						<c:otherwise>
+							<a href="${pageContext.servletContext.contextPath }/board?pg=${param.pg}">글목록</a>
+						</c:otherwise>
+					</c:choose>					
+					<c:choose>
+						<c:when test="${authUser.no == vo.user_no }">
 							<a href="${pageContext.servletContext.contextPath }/board/modify/${vo.no}">글수정</a>
 						</c:when>
 					</c:choose>
