@@ -25,7 +25,6 @@ public class BoardController {
 	@RequestMapping("")
 	public String index(@RequestParam(value = "pg", required = true, defaultValue = "1") Integer page,
 			@RequestParam(value = "kwd", required = true, defaultValue = "") String kwd, Model model) {
-//		PageVo page = boardService.getPage(pg, kwd);
 		Map<String, Object> map = boardService.getList(page, kwd);
 		model.addAttribute("map", map);
 		return "board/index";
