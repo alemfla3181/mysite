@@ -37,24 +37,17 @@ pageContext.setAttribute("newLine", "\n");
 					</tr>
 				</table>
 				<div class="bottom">
-					<c:choose>
-						<c:when test='${param.kwd != null }'>
-							<a href="${pageContext.servletContext.contextPath }/board?pg=${param.pg}&kwd=${param.kwd}">글목록</a>
-						</c:when>
-						<c:otherwise>
-							<a href="${pageContext.servletContext.contextPath }/board?pg=${param.pg}">글목록</a>
-						</c:otherwise>
-					</c:choose>					
+					<a href="${pageContext.servletContext.contextPath }/board?pg=${param.pg}&kwd=${param.kwd}">글목록</a>					
 					<c:choose>
 						<c:when test="${authUser.no == vo.user_no }">
-							<a href="${pageContext.servletContext.contextPath }/board/modify/${vo.no}">글수정</a>
+							<a href="${pageContext.servletContext.contextPath }/board/modify/${vo.no}?pg=${param.pg}&kwd=${param.kwd}">글수정</a>
 						</c:when>
 					</c:choose>
 					<c:choose>
 						<c:when test="${empty authUser }">
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/board/write/${vo.no}">답글달기</a>
+							<a href="${pageContext.request.contextPath}/board/write/${vo.no}?pg=${param.pg}&kwd=${param.kwd}">답글달기</a>
 						</c:otherwise>
 					</c:choose>					
 				</div>

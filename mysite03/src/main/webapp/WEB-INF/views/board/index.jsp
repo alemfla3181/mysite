@@ -38,29 +38,14 @@
 							<c:if test="${vo.depth > 1 }">
 								<img src="${pageContext.request.contextPath }/assets/images/reply.png" />
 							</c:if>					 
-							<c:choose>
-								<c:when test='${map.query != ""}'>
-									<a href="${pageContext.request.contextPath }/board/view/${vo.no}?pg=${map.prevPage}&kwd=${map.query}">${vo.title }</a>	
-								</c:when>
-								<c:otherwise>
-									<a href="${pageContext.request.contextPath }/board/view/${vo.no}?pg=${map.prevPage}">${vo.title }</a>	
-								</c:otherwise>
-							</c:choose>		
+							<a href="${pageContext.request.contextPath }/board/view/${vo.no}?pg=${map.prevPage}&kwd=${map.query}">${vo.title }</a>		
 							</td>	
 							<td>${vo.user_name }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.reg_date }</td>
 							<td>
 							<c:if test="${authUser.no == vo.user_no }">
-								<c:choose>
-									<c:when test='${map.query != ""}'>
-										<a href="${pageContext.request.contextPath }/board/delete/${vo.no}?pg=${map.prevPage}&kwd=${map.query}" class="del">삭제</a>	
-									</c:when>
-									<c:otherwise>
-										<a href="${pageContext.request.contextPath }/board/delete/${vo.no}?pg=${map.prevPage}" class="del">삭제</a>
-									</c:otherwise>
-								</c:choose>	
-								
+								<a href="${pageContext.request.contextPath }/board/delete/${vo.no}?pg=${map.prevPage}&kwd=${map.query}" class="del">삭제</a>									
 							</c:if>						
 							</td>
 						</tr>
@@ -70,19 +55,12 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul><c:if test="${map.prevPage > 1}">
-							<c:choose>
-								<c:when test='${map.query != ""}'>
-									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage-1}&kwd=${map.query}">◀</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage-1}">◀</a></li>
-								</c:otherwise>
-							</c:choose>
+							<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage-1}&kwd=${map.query}">◀</a></li>
 						</c:if>												
 						<c:forEach var='page' begin="${map.beginPage }" end="${map.endPage}">
 						<c:choose>
 							<c:when test="${page == map.prevPage}">
-								<li class="selected"><a href="${pageContext.request.contextPath }/board?pg=${map.prevPage}">${page}</a></li>
+								<li class="selected"><a href="${pageContext.request.contextPath }/board?pg=${map.prevPage}&kwd=${map.query}">${page}</a></li>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
@@ -90,42 +68,24 @@
 										<li >${page}</li>
 									</c:when>
 									<c:otherwise>
-										<c:choose>
-											<c:when test='${map.query != ""}'>
-												<li ><a href="${pageContext.request.contextPath }/board?pg=${page}&kwd=${map.query}">${page}</a></li>
-											</c:when>
-											<c:otherwise>
-												<li ><a href="${pageContext.request.contextPath }/board?pg=${page}">${page}</a></li>
-											</c:otherwise>
-										</c:choose>										
+										<li ><a href="${pageContext.request.contextPath }/board?pg=${page}&kwd=${map.query}">${page}</a></li>									
 									</c:otherwise>
 								</c:choose>							
 							</c:otherwise>
 						</c:choose>
 						</c:forEach>
 						<c:if test="${map.prevPage < map.TotalPage}">
-							<c:choose>
-								<c:when test='${map.query != ""}'>
-									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage+1}&kwd=${map.query}">▶</a></li>
-								</c:when>
-								<c:otherwise>
-									<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage+1}">▶</a></li>
-								</c:otherwise>
-							</c:choose>							
+							<li><a style="color:orange" href="${pageContext.request.contextPath }/board?pg=${map.prevPage+1}&kwd=${map.query}">▶</a></li>				
 						</c:if>
 						</ul>
 				</div>
 				<!-- pager 추가 -->		
 
 				<div class="bottom">
-					<c:choose>
-						<c:when test="${empty authUser }">
-						</c:when>
-						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/board/write"
-								id="new-book">글쓰기</a>
-						</c:otherwise>
-					</c:choose>
+					<c:if test="${not empty authUser }">
+						<a href="${pageContext.request.contextPath}/board/write?pg=${param.pg}&kwd=${param.kwd}"
+								id="new-book">글쓰기</a>					
+					</c:if>						
 				</div>
 			</div>
 		</div>

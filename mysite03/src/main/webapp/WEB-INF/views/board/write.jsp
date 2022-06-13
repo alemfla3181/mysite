@@ -34,8 +34,15 @@
 							<td><textarea id="content" name="content"></textarea></td>
 						</tr>
 					</table>
-					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath }/board">취소</a>
+					<div class="bottom">		
+							<c:choose>
+								<c:when test="${no == null}">
+									<a href="${pageContext.servletContext.contextPath }/board?pg=${param.pg}&kwd=${param.kwd}">취소</a>		
+								</c:when>
+								<c:otherwise>
+									<a href="${pageContext.servletContext.contextPath }/board/view/${no }?pg=${param.pg}&kwd=${param.kwd}">취소</a>										
+								</c:otherwise>
+							</c:choose>					
 						<input type="submit" value="등록">
 					</div>
 				</form>
