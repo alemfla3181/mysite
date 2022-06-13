@@ -52,9 +52,6 @@ public class BoardService {
 	}
 
 	public boolean insert(BoardVo vo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null)
-			return false;
 		// 새글
 		if (vo.getNo() == null) {
 			vo.setO_no(1L);
@@ -76,7 +73,7 @@ public class BoardService {
 
 	public void viewHit(HttpServletResponse response, String view, BoardVo vo) {
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if ((authUser == null) || (authUser.getNo() != vo.getUser_no())) {
+		if ((authUser.getNo() != vo.getUser_no())) {
 			if (view == "") {
 				boardRepository.updateHit(vo.getNo());
 				Cookie cookie = new Cookie("view", "[" + vo.getNo() + "]");
@@ -97,8 +94,6 @@ public class BoardService {
 
 	public void modify(BoardVo vo) {
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (authUser == null)
-			return;
 		if (vo.getUser_no() == authUser.getNo())
 			boardRepository.update(vo);
 	}

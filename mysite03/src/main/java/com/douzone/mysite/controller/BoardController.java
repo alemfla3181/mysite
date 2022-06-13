@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 
@@ -40,6 +41,7 @@ public class BoardController {
 		return "board/view";
 	}
 
+	@Auth
 	@RequestMapping(value = { "/write", "/write/{no}" }, method = RequestMethod.GET)
 	public String add(@PathVariable(value = "no", required = false) Long no, Model model) {
 		model.addAttribute("no", no);
@@ -51,13 +53,15 @@ public class BoardController {
 		boardService.insert(vo);
 		return "redirect:/board";
 	}
-
+	
+	@Auth
 	@RequestMapping(value = "/delete/{no}", method = RequestMethod.GET)
 	public String delete(@PathVariable("no") Long no) {
 		boardService.delete(no);
 		return "redirect:/board";
 	}
-
+	
+	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET)
 	public String modify(@PathVariable("no") Long no, Model model) {
 		BoardVo vo = boardService.getView(no);
@@ -65,6 +69,7 @@ public class BoardController {
 		return "board/modify";
 	}
 
+	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.POST)
 	public String modify(BoardVo vo) {
 		boardService.modify(vo);
