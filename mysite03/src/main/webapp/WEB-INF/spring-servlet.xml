@@ -38,7 +38,13 @@
 	</bean>
 
 	<!-- validator, conversionService, messageConverter를 자동으로 등록 -->
-	<mvc:annotation-driven />
+	<mvc:annotation-driven >
+	
+		<!-- Argument Resolver  -->
+		<mvc:argument-resolvers>
+			<bean class="com.douzone.mysite.security.AuthUserHandlerMethodArgumentResolver" />
+		</mvc:argument-resolvers>
+	</mvc:annotation-driven>
 	
 	<!-- Interceptors -->
 	<mvc:interceptors>
@@ -56,7 +62,15 @@
 			<mvc:exclude-mapping path="/user/auth"/>
 			<mvc:exclude-mapping path="/user/logout"/>
 			<bean class="com.douzone.mysite.security.AuthInterceptor" />
+		</mvc:interceptor>		
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<mvc:exclude-mapping path="/assets/**"/>
+			<mvc:exclude-mapping path="/user/auth"/>
+			<mvc:exclude-mapping path="/user/logout"/>
+			<bean class="com.douzone.mysite.security.SiteInterceptor" />
 		</mvc:interceptor>
+		
 	</mvc:interceptors>
 
 	<!-- 서블릿 컨테이너의 디폴트 서블릿 위임 핸들러 -->

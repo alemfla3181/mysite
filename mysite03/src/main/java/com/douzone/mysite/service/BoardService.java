@@ -6,19 +6,15 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.douzone.mysite.repository.BoardRepository;
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.UserVo;
 
 @Service
 public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
-	@Autowired
-	HttpSession session;
 
 	public Map<String, Object> getList(Integer prevPage, String query) {
 		int count = boardRepository.findBoardCount(query);
@@ -39,11 +35,11 @@ public class BoardService {
 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
-		map.put("count", count);			// 총 글의 수
-		map.put("TotalPage", TotalPage);	// 총 페이지 수
-		map.put("beginPage", beginPage);	// 페이징에 보일 첫 페이지
-		map.put("prevPage", prevPage);		// 페이징에 보일 현재 페이지
-		map.put("endPage", endPage);		// 페이징에 보일 마지막 페이지
+		map.put("count", count); // 총 글의 수
+		map.put("TotalPage", TotalPage); // 총 페이지 수
+		map.put("beginPage", beginPage); // 페이징에 보일 첫 페이지
+		map.put("prevPage", prevPage); // 페이징에 보일 현재 페이지
+		map.put("endPage", endPage); // 페이징에 보일 마지막 페이지
 		map.put("count", count);
 		map.put("count", count);
 		map.put("query", query);
@@ -72,19 +68,16 @@ public class BoardService {
 	}
 
 	public void viewHit(HttpServletResponse response, String view, BoardVo vo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if ((authUser.getNo() != vo.getUser_no())) {
-			if (view == "") {
-				boardRepository.updateHit(vo.getNo());
-				Cookie cookie = new Cookie("view", "[" + vo.getNo() + "]");
-				cookie.setMaxAge(60 * 60 * 24); // 1day
-				response.addCookie(cookie);
-			} else if (view.indexOf("[" + vo.getNo() + "]") < 0) {
-				boardRepository.updateHit(vo.getNo());
-				Cookie cookie = new Cookie("view", (view += "[" + vo.getNo() + "]"));
-				cookie.setMaxAge(60 * 60 * 24); // 1day
-				response.addCookie(cookie);
-			}
+		if (view == "") {
+			boardRepository.updateHit(vo.getNo());
+			Cookie cookie = new Cookie("view", "[" + vo.getNo() + "]");
+			cookie.setMaxAge(60 * 60 * 24); // 1day
+			response.addCookie(cookie);
+		} else if (view.indexOf("[" + vo.getNo() + "]") < 0) {
+			boardRepository.updateHit(vo.getNo());
+			Cookie cookie = new Cookie("view", (view += "[" + vo.getNo() + "]"));
+			cookie.setMaxAge(60 * 60 * 24); // 1day
+			response.addCookie(cookie);
 		}
 	}
 
@@ -93,8 +86,6 @@ public class BoardService {
 	}
 
 	public void modify(BoardVo vo) {
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if (vo.getUser_no() == authUser.getNo())
-			boardRepository.update(vo);
+		boardRepository.update(vo);
 	}
 }

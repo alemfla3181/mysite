@@ -4,13 +4,13 @@
 <mapper namespace="user">
 	<insert id="insert" parameterType="uservo">
 	<![CDATA[
-		insert into user values(null, #{name }, #{email }, #{password }, #{gender }, now())
+		insert into user values(null, #{name }, #{email }, #{password }, #{gender }, 'USER', now())
 		]]>
 	</insert>
 
 	<select id="finByEmailAndPassword" parameterType="uservo" resultType="uservo">
 	<![CDATA[
-		select no, name from user where email=#{email } and password=#{password }
+		select no, name, role from user where email=#{email } and password=#{password }
 		]]>
 	</select>
 	
@@ -20,7 +20,7 @@
 		]]>
 	</select>
 	
-	<update id="updateUser" parameterType="uservo">
+	<update id="update" parameterType="uservo">
 		<choose>
 			<when test='password == ""'>
 			<![CDATA[

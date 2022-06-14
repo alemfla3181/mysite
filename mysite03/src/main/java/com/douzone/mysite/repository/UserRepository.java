@@ -24,7 +24,7 @@ public class UserRepository {
 		return sqlSession.selectOne("user.findByNo", no);
 	}
 
-	public boolean updateUser(UserVo vo) {		
+	public boolean update(UserVo vo) {		
 		return sqlSession.update("user.update", vo) == 1;
 	}
 }

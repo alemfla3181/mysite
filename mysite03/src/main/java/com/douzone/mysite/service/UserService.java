@@ -33,8 +33,6 @@ public class UserService {
 
 
 	public void updateUser(UserVo vo) {
-		userRepository.updateUser(vo);
-	}
-
-	
+		userRepository.update(vo);
+	}	
 }

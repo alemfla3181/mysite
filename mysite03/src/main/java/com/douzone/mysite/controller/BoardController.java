@@ -48,6 +48,7 @@ public class BoardController {
 		return "board/write";
 	}
 
+	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String add(BoardVo vo) {
 		boardService.insert(vo);
