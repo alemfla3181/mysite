@@ -18,7 +18,10 @@ public class SiteInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {	
+		// 어플리케이션 범위에 객체를 확인하기 위해 
 		ServletContext sc = request.getServletContext();
+		
+		// site가 없으면 DB에서 가져와서 어플리케이션에 담아줌
 		if(sc.getAttribute("site") == null) {
 			SiteVo vo = siteService.getSite();
 			sc.setAttribute("site", vo);
@@ -26,6 +29,7 @@ public class SiteInterceptor implements HandlerInterceptor {
 			return false;
 		}		
 		
+		// 있으면 컨트롤러가 실행되도록 리턴 
 		return true;		
 	}	
 }
