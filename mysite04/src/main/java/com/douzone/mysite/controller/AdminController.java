@@ -34,10 +34,12 @@ public class AdminController {
 
 	@RequestMapping("/main/update")
 	public String update(@RequestParam(value = "file", required = false) MultipartFile multipartFile, SiteVo vo) {
+		String url = fileUploadService.restore(multipartFile);
+		System.out.println(multipartFile);
 		if (multipartFile != null) {
-			String url = fileUploadService.restore(multipartFile);
 			vo.setProfileURL(url);
 		}
+		System.out.println(url);
 		siteService.updateSite(vo);
 		
 		vo = siteService.getSite();

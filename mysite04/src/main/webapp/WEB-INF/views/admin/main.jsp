@@ -23,8 +23,8 @@
 						<input id="welcomeMessage" name="welcomeMessage" type="text" value="${site.welcomeMessage }">
 
 						<label class="block-label">프로필 이미지</label>
-						<img id="profile" src="${pageContext.request.contextPath }/${site.profileURL }">
-						<input type="file" name="file1">
+						<img id="profile" src="${pageContext.request.contextPath }${site.profileURL }">
+						<input type="file" name="file">
 
 						<label class="block-label">사이트 설명</label>
 						<textarea name="description">${site.description }</textarea>
