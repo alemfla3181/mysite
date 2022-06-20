@@ -12,8 +12,7 @@
 		]]>
 	</select>
 	
-	<update id="update" parameterType="sitevo">	
-	
+	<update id="update" parameterType="sitevo">		
 		<choose>
 			<when test='profileURL == null'>
 			<![CDATA[
@@ -32,7 +31,6 @@
 				where no = 1				
 				]]>
 			</otherwise>
-		</choose>
-		
+		</choose>		
 	</update>
 </mapper>
