@@ -13,7 +13,7 @@
 ## mysite04
 1. Spring MVC
 2. java configuration
-3. war 패키징 (Tomcat 배포)1
+3. war 패키징 (Tomcat 배포)
 
 ## mysite05
 1. Spring MVC
