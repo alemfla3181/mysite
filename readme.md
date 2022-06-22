@@ -27,3 +27,7 @@
 - jar 패키징 (Tomcat embeded) : default
 - war 패키징 (Tomcat 배포) : options
 
+## mysite07
+1.	Spring Boot, Spring MVC(Restful API, Backend), react(Frontend)
+2.	auto configuration + 미세설정[application.properties(application.yml)]  
+3.	jar 패키징(jar 배포)
