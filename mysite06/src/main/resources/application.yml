@@ -6,9 +6,14 @@ spring:
          enabled: true
    # mvc
    mvc:
+      static-path-pattern: /assets/**
+      throw-exception-if-no-handler-found: true
       view:
          prefix: /WEB-INF/views/
          suffix: .jsp
+   web:
+      resources:
+         static-locations: classpath:/static/, file:/mysite-uploads/
    # message resource(i18n)
    messages:
       always-message-format: true
