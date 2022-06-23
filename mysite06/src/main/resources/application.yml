@@ -1,36 +1,30 @@
 # spring configuration
 spring:
-
    # devtools - live reload
    devtools:
-      liverload:
+      livereload:
          enabled: true
-         
    # mvc
    mvc:
       view:
          prefix: /WEB-INF/views/
          suffix: .jsp
-
    # message resource(i18n)
    messages:
-      always-meesage-format: true
+      always-message-format: true
       basename: messages/messages_ko
       encoding: utf-8
-      
    # multipart
    servlet:
       multipart:
          enabled: true
          max-file-size: 10MB
          max-request-size: 50MB
-         
    # aop(@EnableAspectJAutoProxy)
    aop:
       auto: true
       proxy-target-class: true
-      
-      
+
    # datasource
    datasource:
       driver-class-name: org.mariadb.jdbc.Driver
@@ -38,13 +32,16 @@ spring:
       username: webdb
       password: webdb
       hikari:
-         minimum-idle: 10 
-      
-     
+        minimum-idle: 10
+        maximum-pool-size: 20
 
 
+# mybatis configuration
+mybatis:
+   config-location: classpath:mybatis/configuration.xml
 
-# server
+
+# server configuration
 server:
    port: 8080
    servlet:
@@ -53,7 +50,7 @@ server:
          charset: utf-8
          enabled: true
 
-# logging
-logging:
+
+# logging configuration
+loggin:
    config: classpath:logback.xml
-  
