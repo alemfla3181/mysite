@@ -40,8 +40,7 @@
 					<p style="text-align:left; padding:0; color:red;">
 						<form:errors path="email" />
 					</p>						
-					<label class="block-label"> 
-					<spring:message code='user.join.label.password' /> </label>
+					<label class="block-label"> <spring:message code='user.join.label.password' /> </label>
 					<form:password path="password"/>
 					<p style="text-align:left; padding:0; color:red;">
 						<form:errors path="password" />
