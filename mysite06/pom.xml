@@ -113,7 +113,7 @@
 				<version>1.1</version>
 				<configuration>
 					<url>${tomcat.deploy.url}</url>
-					<server>tomcat.LINUX</server>
+					<server>tomcat-LINUX</server>
 				</configuration>
 			</plugin>
 		</plugins>
