@@ -16,14 +16,17 @@ public class UserRepository {
 		return sqlSession.insert("user.insert", vo) == 1;
 	}
 
-	public UserVo finByEmailAndPassword(UserVo vo) {
-		return sqlSession.selectOne("user.finByEmailAndPassword", vo);
+	public UserVo findByEmailAndPassword(UserVo vo) {
+		return sqlSession.selectOne("user.findByEmailAndPassword", vo);
 	}
 
 	public UserVo findByNo(Long no) {
 		return sqlSession.selectOne("user.findByNo", no);
 	}
 
+	public UserVo findByEmail(String email) {
+		return sqlSession.selectOne("user.findByEmail", email);
+	}
 	public boolean update(UserVo vo) {		
 		return sqlSession.update("user.update", vo) == 1;
 	}

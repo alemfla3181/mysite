@@ -43,8 +43,6 @@ $(function(){
 			messageBox("회원가입","이름이 비어 있습니다.", function(){
 				$("#name").focus();
 			});
-			// alert("이름이 비어 있습니다.");
-			// $("#name").focus();
 			return;			
 		}
 		
@@ -105,8 +103,9 @@ $(function(){
 				}
 				
 				if(response.data){ // exists!
-					alert("존재하는 이메일입니다. 다른 이메일을 사용하세요");
-					$("#email").val('').focus();
+					messageBox("회원가입","존재하는 이메일 입니다.", function(){
+						$("#email").focus();
+					});
 					return;
 				}
 				
