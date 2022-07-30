@@ -115,7 +115,6 @@ $(function(){
 	fetch();
 });
 
-
 </script>
 </head>
 <body>
